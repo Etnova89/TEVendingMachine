@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace FindAndReplace
 {
@@ -6,7 +7,60 @@ namespace FindAndReplace
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            bool doesFileExist = false;
+            string fileName = "";
+            string filePath = "";
+            string fullPath = "";
+
+
+            while (doesFileExist != true)
+            {
+                Console.WriteLine("Please enter the file path: ");                      //prompt for filepath
+                filePath = Console.ReadLine();
+                Console.WriteLine("Please enter the file name: ");                      //prompt for filename
+                fileName = Console.ReadLine();
+                fullPath = Path.Combine(filePath, fileName);
+                doesFileExist = File.Exists(fullPath);
+
+                if (doesFileExist == false)                                             //checks to see if file exists at that path
+                {
+                    Console.WriteLine("That file name or path is incorrect");
+                }
+            }
+
+            Console.WriteLine("Please enter the destination for the copy: ");               
+            string returnPath = Console.ReadLine();
+
+            string returnFullPath = Path.Combine(filePath, returnPath);
+
+
+            Console.WriteLine("Please enter your search phrase: ");
+            string searchPhrase = Console.ReadLine();
+            Console.WriteLine("What would you like the search phrase to be replaced with? ");
+            string replacementPhrase = Console.ReadLine();
+
+            try
+            {
+                using (StreamReader sr = new StreamReader(fullPath))
+                {
+                    using (StreamWriter sw = new StreamWriter(returnFullPath))
+                    {
+                        while (!sr.EndOfStream)
+                        {
+                            string line = sr.ReadLine();
+                            line = line.Replace(searchPhrase, replacementPhrase);
+                            sw.WriteLine(line);
+                        }
+                    }
+                }
+            }
+            catch (FileNotFoundException)
+            {
+                Console.WriteLine("There is no file that exists by that name");
+
+            }
         }
     }
 }
+
+
