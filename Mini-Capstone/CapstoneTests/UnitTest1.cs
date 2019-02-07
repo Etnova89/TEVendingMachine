@@ -36,22 +36,47 @@ namespace CapstoneTests
         }
 
         [TestMethod]
-        public void VendingMachineItemAdd()
+        public void AddPropertiesToItemTestReturn()
         {
-            VendingMachine vm = new VendingMachine();
-            int oldCount = vm.ToArray().Length;
-            VendingMachineItem item = new VendingMachineItem()
-            {
-                Slot = "a1",
-                ProductName = "item",
-                Price = 1.10m,
-            };
-            vm.Add(item);
-            int newCount = vm.ToArray().Length;
-            Assert.AreEqual(oldCount + 1, newCount);
-
-
+            VendingMachineItem item = new VendingMachineItem();
+            item.Slot = "A1";
+            item.ProductName = "TestName";
+            item.Price = 3.00M;
+            Assert.AreEqual("A1", item.Slot);
         }
+
+        [TestMethod]
+        public void TakeArraySplitAndAddToPropertiesOfVendingMachineItem()
+        {
+            VendingMachineItem item = new VendingMachineItem();
+            string itemLine = "A1|Potato Crisps|3.05";
+            string[] itemArray = itemLine.Split('|');
+            item.Slot = itemArray[0];
+            item.ProductName = itemArray[1];
+            item.Price = decimal.Parse(itemArray[2]);
+            Assert.AreEqual("A1", item.Slot);
+            Assert.AreEqual("Potato Crisps", item.ProductName);
+            Assert.AreEqual(3.05M, item.Price);
+        }
+
+
+        //[TestMethod]
+        //public void VendingMachineItemAdd()
+        //{
+        //    VendingMachine vm = new VendingMachine();
+        //    int oldCount = vm.ToArray().Length;
+        //    VendingMachineItem item = new VendingMachineItem()
+        //    {
+        //        Slot = "a1",
+        //        ProductName = "item",
+        //        Price = 1.10m,
+        //    };
+        //    vm.Add(item);
+        //    int newCount = vm.ToArray().Length;
+        //    Assert.AreEqual(oldCount + 1, newCount);
+
+
+        //}
 
     }
 }
