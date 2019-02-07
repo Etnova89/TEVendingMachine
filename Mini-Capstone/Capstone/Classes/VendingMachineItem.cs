@@ -9,5 +9,11 @@ namespace Capstone.Classes
         public string Slot { get; set; }
         public string ProductName { get; set; }
         public decimal Price { get; set; }
+
+
+        public override string ToString()
+        {
+            return $"{Slot.PadRight(1)} - {ProductName.PadRight(20)} - {Price:c}";
+        }
     }
 }

@@ -7,9 +7,12 @@ namespace Capstone.Classes
     public class UserInterface
     {
         private VendingMachine vendingMachine = new VendingMachine();
+        private VendingMachineItem items = new VendingMachineItem();
+
 
         public void RunInterface()
         {
+
             bool done = false;
             while (!done)
             {
@@ -29,6 +32,7 @@ namespace Capstone.Classes
                 switch (choice)
                 {
                     case 1:
+                        vendingMachine.ReadFile();
                         DisplayVendingMachineItems();
                         break;
 
@@ -46,8 +50,8 @@ namespace Capstone.Classes
                         break;
                 }
 
-                Console.ReadLine();
             }
+
 
         }
 
@@ -59,6 +63,7 @@ namespace Capstone.Classes
                 Console.WriteLine("(1) Feed Money");
                 Console.WriteLine("(2) Select Product");
                 Console.WriteLine("(3) Finish Transaction");
+                Console.WriteLine($"Current Balance: {vendingMachine.Balance:C}");
                 int choice = 0;
                 try
                 {
@@ -85,9 +90,6 @@ namespace Capstone.Classes
                         break;
                 }
 
-                Console.ReadLine();
-
-
             }
 
         }
@@ -95,25 +97,49 @@ namespace Capstone.Classes
 
         private void DisplayVendingMachineItems()
         {
-
-        }
-
-        private void SalesReport()
-        {
-
+            VendingMachineItem[] result = vendingMachine.ToArray();
+            //Console.Clear();
+            foreach (VendingMachineItem item in result)
+            {
+                Console.WriteLine(item.ToString());
+            }
+            Console.WriteLine();
+            
         }
 
         private void FeedMoney()
         {
+            Console.WriteLine("How much money would you like to enter (in dollar bills up to 10$)?");
+            try
+            {
+                int deposit = int.Parse(Console.ReadLine());
+                if(deposit == 1 || deposit == 2|| deposit == 5 || deposit == 10)
+                {
+                    vendingMachine.AddToBalance(deposit);
+                }
+                else
+                {
+                    Console.WriteLine("Invalid amount, please enter a valid amount.\n");
+                }
+            }
+            catch
+            {
+
+            }
 
         }
 
         private void SelectProduct()
         {
-
+            //DispenseItem();
         }
         
         private void FinishTransaction()
+        {
+            //MakeChange;
+        }
+
+        private void SalesReport()
         {
 
         }

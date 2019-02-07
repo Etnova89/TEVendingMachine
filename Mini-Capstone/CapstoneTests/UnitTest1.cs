@@ -71,26 +71,11 @@ namespace CapstoneTests
             };
             items.Add(item);
             VendingMachineItem[] itemArray = items.ToArray();
-            CollectionAssert.AreEquivalent(items,itemArray);
+            CollectionAssert.AreEquivalent(items, itemArray);
 
         }
-        //[TestMethod]
-        //public void VendingMachineItemAdd()
-        //{
-        //    VendingMachine vm = new VendingMachine();
-        //    int oldCount = vm.ToArray().Length;
-        //    VendingMachineItem item = new VendingMachineItem()
-        //    {
-        //        Slot = "a1",
-        //        ProductName = "item",
-        //        Price = 1.10m,
-        //    };
-        //    vm.Add(item);
-        //    int newCount = vm.ToArray().Length;
-        //    Assert.AreEqual(oldCount + 1, newCount);
-
-
-        //}
 
     }
+
 }
+

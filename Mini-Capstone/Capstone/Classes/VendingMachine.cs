@@ -18,6 +18,7 @@ namespace Capstone.Classes
             {
                 using (StreamReader sr = new StreamReader(filePath))
                 {
+                    items.Clear();
                     while (!sr.EndOfStream)
                     {
                         string itemLine = sr.ReadLine();
@@ -28,6 +29,7 @@ namespace Capstone.Classes
                         item.Price = decimal.Parse(itemArray[2]);               //TODO, add a tryparse
                         items.Add(item);
                     }
+
                 }
                 result = true;
             }
@@ -44,9 +46,16 @@ namespace Capstone.Classes
 
         public VendingMachineItem[] ToArray()
         {
-            VendingMachineItem[] result = items.ToArray();
-            return result;
+            VendingMachineItem[] displayItems = items.ToArray();
+            return displayItems;
         }
 
+        public decimal Balance { get; private set; }
+
+        public  decimal AddToBalance(decimal money)
+        {
+            Balance += money;
+            return Balance;
+        }
     }
 }
