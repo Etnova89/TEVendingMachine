@@ -13,10 +13,63 @@ namespace Capstone.Classes
             bool done = false;
             while (!done)
             {
-                Console.WriteLine("This is the UserInterface");
+                Console.WriteLine("(1) Display Vending Machine Items");
+                Console.WriteLine("(2) Purchase");
+                Console.WriteLine("(3) End");
+                int choice = 0;
+                try
+                {
+                    choice = Int32.Parse(Console.ReadLine());
+                }
+                catch
+                {
+                    choice = 0;
+                }
+
+                switch (choice)
+                {
+                    case 1:
+                        DisplayVendingMachineItems();
+                        break;
+
+                    case 2:
+                        PurchaseMenu();
+                        break;
+
+                    case 3:
+                        SalesReport();
+                        done = true;
+                        break;
+
+                    case 9:
+                        SalesReport();
+                        break;
+                }
+
                 Console.ReadLine();
             }
 
         }
+
+        private void PurchaseMenu()
+        {
+
+
+
+        }
+
+        private void DisplayVendingMachineItems()
+        {
+
+        }
+
+        private void SalesReport()
+        {
+
+        }
+
+
+
+
     }
 }

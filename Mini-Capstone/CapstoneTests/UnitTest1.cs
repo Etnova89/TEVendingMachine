@@ -59,7 +59,21 @@ namespace CapstoneTests
             Assert.AreEqual(3.05M, item.Price);
         }
 
+        [TestMethod]
+        public void ListToArray()
+        {
+            List<VendingMachineItem> items = new List<VendingMachineItem>();
+            VendingMachineItem item = new VendingMachineItem()
+            {
+                Slot = "a1",
+                ProductName = "item",
+                Price = 1.10m,
+            };
+            items.Add(item);
+            VendingMachineItem[] itemArray = items.ToArray();
+            CollectionAssert.AreEquivalent(items,itemArray);
 
+        }
         //[TestMethod]
         //public void VendingMachineItemAdd()
         //{

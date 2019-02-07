@@ -42,5 +42,11 @@ namespace Capstone.Classes
             return result;
         }
 
+        public VendingMachineItem[] ToArray()
+        {
+            VendingMachineItem[] result = items.ToArray();
+            return result;
+        }
+
     }
 }
