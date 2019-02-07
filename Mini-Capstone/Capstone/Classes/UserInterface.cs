@@ -53,10 +53,45 @@ namespace Capstone.Classes
 
         private void PurchaseMenu()
         {
+            bool done = false;
+            while (!done)
+            {
+                Console.WriteLine("(1) Feed Money");
+                Console.WriteLine("(2) Select Product");
+                Console.WriteLine("(3) Finish Transaction");
+                int choice = 0;
+                try
+                {
+                    choice = Int32.Parse(Console.ReadLine());
+                }
+                catch
+                {
+                    choice = 0;
+                }
+
+                switch (choice)
+                {
+                    case 1:
+                        FeedMoney();
+                        break;
+
+                    case 2:
+                        SelectProduct();
+                        break;
+
+                    case 3:
+                        FinishTransaction();
+                        done = true;
+                        break;
+                }
+
+                Console.ReadLine();
 
 
+            }
 
         }
+        
 
         private void DisplayVendingMachineItems()
         {
@@ -68,8 +103,19 @@ namespace Capstone.Classes
 
         }
 
+        private void FeedMoney()
+        {
 
+        }
 
+        private void SelectProduct()
+        {
 
+        }
+        
+        private void FinishTransaction()
+        {
+
+        }
     }
 }
