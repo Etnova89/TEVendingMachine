@@ -8,8 +8,8 @@ namespace Capstone.Classes
     public class VendingMachine
     {
         private List<VendingMachineItem> items = new List<VendingMachineItem>();
-
         private string filePath = @"C:\VendingMachine\vendingmachine.csv";
+        public decimal Balance { get; private set; }
 
         public bool ReadFile()
         {
@@ -26,7 +26,8 @@ namespace Capstone.Classes
                         VendingMachineItem item = new VendingMachineItem();
                         item.Slot = itemArray[0];
                         item.ProductName = itemArray[1];
-                        item.Price = decimal.Parse(itemArray[2]);               //TODO, add a tryparse
+                        item.Price = decimal.Parse(itemArray[2]);    //TODO, add a tryparse
+                        item.Quantity = 5;
                         items.Add(item);
                     }
 
@@ -49,8 +50,6 @@ namespace Capstone.Classes
             VendingMachineItem[] displayItems = items.ToArray();
             return displayItems;
         }
-
-        public decimal Balance { get; private set; }
 
         public  decimal AddToBalance(decimal money)
         {

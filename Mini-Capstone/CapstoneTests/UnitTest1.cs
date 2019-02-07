@@ -8,21 +8,21 @@ namespace CapstoneTests
     public class UnitTest1
     {
         [TestMethod]
-        public void VendingMachineCreate()
+        public void VendingMachineCreateTest()
         {
             VendingMachine vm = new VendingMachine();
             Assert.IsNotNull(vm);
         }
 
         [TestMethod]
-        public void VendingMachineCreateItemList()
+        public void VendingMachineCreateItemListTest()
         {
             List<VendingMachineItem> items = new List<VendingMachineItem>();
             Assert.IsNotNull(items);
         }
 
         [TestMethod]
-        public void VendingMachineAddToItemList()
+        public void VendingMachineAddToItemListTest()
         {
             List<VendingMachineItem> items = new List<VendingMachineItem>();
             VendingMachineItem item = new VendingMachineItem()
@@ -36,7 +36,7 @@ namespace CapstoneTests
         }
 
         [TestMethod]
-        public void AddPropertiesToItemTestReturn()
+        public void AddPropertiesToItemTestReturnTest()
         {
             VendingMachineItem item = new VendingMachineItem();
             item.Slot = "A1";
@@ -46,7 +46,7 @@ namespace CapstoneTests
         }
 
         [TestMethod]
-        public void TakeArraySplitAndAddToPropertiesOfVendingMachineItem()
+        public void TakeArraySplitAndAddToPropertiesOfVendingMachineItemTest()
         {
             VendingMachineItem item = new VendingMachineItem();
             string itemLine = "A1|Potato Crisps|3.05";
@@ -60,7 +60,7 @@ namespace CapstoneTests
         }
 
         [TestMethod]
-        public void ListToArray()
+        public void ListToArrayTest()
         {
             List<VendingMachineItem> items = new List<VendingMachineItem>();
             VendingMachineItem item = new VendingMachineItem()
@@ -73,6 +73,13 @@ namespace CapstoneTests
             VendingMachineItem[] itemArray = items.ToArray();
             CollectionAssert.AreEquivalent(items, itemArray);
 
+        }
+        [TestMethod]
+        public void BalanceMethodPropertyTest()
+        {
+            VendingMachine vm = new VendingMachine();
+            vm.AddToBalance(5);
+            Assert.AreEqual(5, vm.Balance);
         }
 
     }

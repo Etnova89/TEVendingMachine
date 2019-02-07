@@ -9,11 +9,12 @@ namespace Capstone.Classes
         public string Slot { get; set; }
         public string ProductName { get; set; }
         public decimal Price { get; set; }
+        public int Quantity { get; set; }
 
 
         public override string ToString()
         {
-            return $"{Slot.PadRight(1)} - {ProductName.PadRight(20)} - {Price:c}";
+            return $"{Slot.PadRight(1)} - {ProductName.PadRight(20)} - {Quantity.ToString().PadRight(1)} Left - {Price:C} ";
         }
     }
 }
