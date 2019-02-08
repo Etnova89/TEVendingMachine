@@ -96,14 +96,14 @@ namespace Capstone.Classes
         private void DisplayVendingMachineItems()
         {
             VendingMachineItem[] result = DisplayCurrentItems();
-            //Console.Clear();
             HeaderMethod();
             foreach (VendingMachineItem item in result)
             {
                 Console.WriteLine(item.ToString());
             }
             Console.WriteLine();
-
+            Console.WriteLine($"Current Balance: {vendingMachine.Balance:C}");
+            Console.WriteLine();
         }
 
         private void FeedMoney()
@@ -131,6 +131,7 @@ namespace Capstone.Classes
         private void SelectProduct()
         {
             VendingMachineItem[] result = DisplayCurrentItems();
+            DisplayVendingMachineItems();
             Console.WriteLine("Please make selection.");
             string userInput = Console.ReadLine().ToUpper();
             foreach (VendingMachineItem item in result)
