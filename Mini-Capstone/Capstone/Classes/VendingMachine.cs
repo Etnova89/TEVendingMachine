@@ -57,7 +57,7 @@ namespace Capstone.Classes
             return Balance;
         }
 
-        public string DispenseItem(VendingMachineItem item) //TODO FINISH ME!
+        public string DispenseItem(VendingMachineItem item)
         {
             string result = "";
             if(Balance >= item.Price)
@@ -72,9 +72,8 @@ namespace Capstone.Classes
 
             }
             return result;
-
-            //go back to purchase menu
         }
+
         public string DispenseMessage(VendingMachineItem item)  //todo linebreak after dispensing
         {
             string result = "";
@@ -114,6 +113,7 @@ namespace Capstone.Classes
             }
             return result;
         }
+
         public int[] MakeChange(decimal Balance)
         {
             int quarter = 0;
@@ -144,6 +144,5 @@ namespace Capstone.Classes
             this.Balance = Balance;
             return change;
         }
-
     }
 }

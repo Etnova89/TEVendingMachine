@@ -74,12 +74,83 @@ namespace CapstoneTests
             CollectionAssert.AreEquivalent(items, itemArray);
 
         }
+
         [TestMethod]
         public void BalanceMethodPropertyTest()
         {
             VendingMachine vm = new VendingMachine();
             vm.AddToBalance(5);
             Assert.AreEqual(5, vm.Balance);
+        }
+
+        [TestMethod]
+        public void MakeChangeTest25CentsReturn1Quarter()
+        {
+            VendingMachine vm = new VendingMachine();
+            vm.AddToBalance(0.25M);
+            int[] result = vm.MakeChange(vm.Balance);
+            int[] expectedResult = { 1, 0, 0 };
+            CollectionAssert.AreEquivalent(expectedResult, result);
+        }
+
+        [TestMethod]
+        public void MakeChangeTest35CentsReturn1Quarter1Dime()
+        {
+            VendingMachine vm = new VendingMachine();
+            vm.AddToBalance(0.35M);
+            int[] result = vm.MakeChange(vm.Balance);
+            int[] expectedResult = { 1, 1, 0 };
+            CollectionAssert.AreEquivalent(expectedResult, result);
+        }
+
+        [TestMethod]
+        public void MakeChangeTest40CentsReturn1Quarter1Dime1Nickel()
+        {
+            VendingMachine vm = new VendingMachine();
+            vm.AddToBalance(0.40M);
+            int[] result = vm.MakeChange(vm.Balance);
+            int[] expectedResult = { 1, 1, 1 };
+            CollectionAssert.AreEquivalent(expectedResult, result);
+        }
+
+        [TestMethod]
+        public void MakeChangeTest50CentsReturn2Quarters()
+        {
+            VendingMachine vm = new VendingMachine();
+            vm.AddToBalance(0.50M);
+            int[] result = vm.MakeChange(vm.Balance);
+            int[] expectedResult = { 2, 0, 0 };
+            CollectionAssert.AreEquivalent(expectedResult, result);
+        }
+
+        [TestMethod]
+        public void MakeChangeTest10CentsReturn1Dime()
+        {
+            VendingMachine vm = new VendingMachine();
+            vm.AddToBalance(0.10M);
+            int[] result = vm.MakeChange(vm.Balance);
+            int[] expectedResult = { 0, 1, 0 };
+            CollectionAssert.AreEquivalent(expectedResult, result);
+        }
+
+        [TestMethod]
+        public void MakeChangeTest5CentsReturn1Nickel()
+        {
+            VendingMachine vm = new VendingMachine();
+            vm.AddToBalance(0.10M);
+            int[] result = vm.MakeChange(vm.Balance);
+            int[] expectedResult = { 0, 0, 1 };
+            CollectionAssert.AreEquivalent(expectedResult, result);
+        }
+
+        [TestMethod]
+        public void MakeChangeTest10DollarsReturn40Quarters()
+        {
+            VendingMachine vm = new VendingMachine();
+            vm.AddToBalance(10);
+            int[] result = vm.MakeChange(vm.Balance);
+            int[] expectedResult = { 40, 0, 0 };
+            CollectionAssert.AreEquivalent(expectedResult, result);
         }
 
     }
