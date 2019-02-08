@@ -7,9 +7,12 @@ namespace Capstone.Classes
 {
     public class VendingMachine
     {
+
+
         private List<VendingMachineItem> items = new List<VendingMachineItem>();
         private string filePath = @"C:\VendingMachine\vendingmachine.csv";
         public decimal Balance { get; private set; }
+        public string SlotSelection { get; set; }
 
         public bool ReadFile()
         {
@@ -45,38 +48,6 @@ namespace Capstone.Classes
             return result;
         }
 
-        public VendingMachineItem[] ToArray()
-        {
-            VendingMachineItem[] displayItems = items.ToArray();
-            return displayItems;
-        }
-
-        public decimal AddToBalance(decimal money)
-        {
-            Balance += money;
-            return Balance;
-        }
-
-        public string DispenseItem(VendingMachineItem item)
-        {
-            string result = "";
-            if (CheckBalance(item))
-            {
-                result = "Insufficient funds.";
-            }
-            if (item.Quantity == 0)
-            {
-                result = "Sold Out.";
-            }
-            else
-            {
-                Balance -= item.Price;
-                result = DispenseMessage(item);
-                item.Quantity--;
-            }
-
-            return result;
-        }
 
         public string DispenseMessage(VendingMachineItem item)  //todo linebreak after dispensing
         {
@@ -104,19 +75,21 @@ namespace Capstone.Classes
             return result;
         }
 
-        public bool CheckBalance(VendingMachineItem item)
+        public VendingMachineItem[] ToArray()
         {
-            bool result = false;
-            if (Balance >= item.Price)
-            {
-                result = true;
-            }
-            else
-            {
-                result = false;
-            }
-            return result;
+            VendingMachineItem[] displayItems = items.ToArray();
+            return displayItems;
         }
+
+        public decimal AddToBalance(decimal money)
+        {
+            if (money > 0)
+            {
+                Balance += money;
+            }
+            return Balance;
+        }
+
 
         public int[] MakeChange(decimal Balance)
         {
@@ -148,5 +121,74 @@ namespace Capstone.Classes
             this.Balance = Balance;
             return change;
         }
+
+        public bool IsSlotSelectionValid()
+        {
+            bool result = false;
+            foreach (VendingMachineItem item in items)
+            {
+                if (item.Slot.Contains(SlotSelection))
+                {
+                    result = true;
+                    break;
+                }
+                else
+                {
+                    result = false;
+                }
+            }
+            return result;
+        }
+
+
+        public string DispenseItem(VendingMachineItem item)
+        {
+            string result = "";
+            if (CheckBalance(item))
+            {
+                if (item.Quantity == 0)
+                {
+                    result = "Sold Out";
+                }
+                else
+                {
+                    Balance -= item.Price;
+                    result = DispenseMessage(item);
+                    item.Quantity--;
+                }
+                return result;
+            }
+            else
+            {
+                result = "Insufficient funds";
+            }
+            return result;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+        public bool CheckBalance(VendingMachineItem item)
+        {
+            bool result = false;
+            if (Balance >= item.Price)
+            {
+                result = true;
+            }
+            else
+            {
+                result = false;
+            }
+            return result;
+        }
+
     }
 }

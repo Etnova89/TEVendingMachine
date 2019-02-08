@@ -49,8 +49,6 @@ namespace Capstone.Classes
                 }
 
             }
-
-
         }
 
         private void PurchaseMenu()
@@ -58,6 +56,7 @@ namespace Capstone.Classes
             bool done = false;
             while (!done)
             {
+                Console.Clear();
                 Console.WriteLine("(1) Feed Money");
                 Console.WriteLine("(2) Select Product");
                 Console.WriteLine("(3) Finish Transaction");
@@ -92,11 +91,12 @@ namespace Capstone.Classes
 
         }
 
-
         private void DisplayVendingMachineItems()
         {
-            VendingMachineItem[] result = DisplayCurrentItems();
-            HeaderMethod();
+            Console.Clear();
+            Console.WriteLine("Slot".PadRight(5) + "Product Name".PadRight(20) + "# Remaining".PadRight(14) + "Price");
+            Console.WriteLine("=============================================");
+            VendingMachineItem[] result = vendingMachine.ToArray();
             foreach (VendingMachineItem item in result)
             {
                 Console.WriteLine(item.ToString());
@@ -130,33 +130,49 @@ namespace Capstone.Classes
 
         private void SelectProduct()
         {
-            VendingMachineItem[] result = DisplayCurrentItems();
+            Console.Clear();
             DisplayVendingMachineItems();
             Console.WriteLine("Please make selection.");
-            string userInput = Console.ReadLine().ToUpper();
-            string resultString = "";
-            foreach (VendingMachineItem item in result)
+            string selection = Console.ReadLine().ToUpper();
+            vendingMachine.SlotSelection = selection;
+            string result = "";
+            if (vendingMachine.IsSlotSelectionValid())
             {
-                if (item.Slot == userInput)
+                VendingMachineItem[] inventory = GetInventory();
+                foreach (VendingMachineItem item in inventory)
                 {
-                    resultString = vendingMachine.DispenseItem(item);
-                }
-                else
-                {
-                    resultString = "Slot number not found, please try again.";
+                    if (item.Slot == selection)
+                    {
+                        result = vendingMachine.DispenseItem(item);
+                    }
                 }
             }
-            Console.WriteLine(resultString);
-            //display updated inventory
-            //prompt to make a selection
-            //
+            else
+            {
+                result = "Invalid selection entered.";
+            }
+            Console.WriteLine(result);
+            Console.ReadLine();
         }
 
-        private VendingMachineItem[] DisplayCurrentItems()
-        {
-            VendingMachineItem[] result = vendingMachine.ToArray();
-            return result;
-        }
+        //private void SelectProduct()
+        //{  
+
+
+        //    VendingMachineItem[] result = GetInventory(); //Gets current working inventory to operate on
+        //    foreach (VendingMachineItem item in result)
+        //    {
+        //        if (item.Slot == userInput)
+        //        {
+        //            resultString = vendingMachine.DispenseItem(item);
+        //        }
+        //        else
+        //        {
+        //            resultString = "Slot number not found, please try again.";
+        //        }
+        //    }
+        //    Console.WriteLine(resultString);
+        //}
 
         private void FinishTransaction()
         {
@@ -183,7 +199,6 @@ namespace Capstone.Classes
             }
             Console.WriteLine(result);
             Console.WriteLine();
-
         }
 
         private void SalesReport()
@@ -191,11 +206,11 @@ namespace Capstone.Classes
 
         }
 
-        private void HeaderMethod()
+        private VendingMachineItem[] GetInventory()
         {
-            Console.Clear();
-            Console.WriteLine("Slot".PadRight(5) + "Product Name".PadRight(20) + "# Remaining".PadRight(14) + "Price");
-            Console.WriteLine("=============================================");
+            VendingMachineItem[] result;
+            result = vendingMachine.ToArray();
+            return result;
         }
     }
 }
