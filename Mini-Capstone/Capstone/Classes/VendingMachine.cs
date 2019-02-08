@@ -60,17 +60,21 @@ namespace Capstone.Classes
         public string DispenseItem(VendingMachineItem item)
         {
             string result = "";
-            if(Balance >= item.Price)
+            if (CheckBalance(item))
+            {
+                result = "Insufficient funds.";
+            }
+            if (item.Quantity == 0)
+            {
+                result = "Sold Out.";
+            }
+            else
             {
                 Balance -= item.Price;
                 result = DispenseMessage(item);
                 item.Quantity--;
             }
-            else
-            {
-                result = "Insufficient funds.";
 
-            }
             return result;
         }
 
