@@ -138,8 +138,17 @@ namespace Capstone.Classes
             {
                 if (item.Slot == userInput)
                 {
-                    vendingMachine.DispenseItem(item);
+                    if (vendingMachine.CheckBalance(item))
+                    {
+                        vendingMachine.DispenseItem(item);
+                        Console.WriteLine(vendingMachine.DispenseMessage(item));
+                    }
+                    else
+                    {
+                        Console.WriteLine("Insufficient funds.");
+                    }
                 }
+
             }
             //display updated inventory
             //prompt to make a selection

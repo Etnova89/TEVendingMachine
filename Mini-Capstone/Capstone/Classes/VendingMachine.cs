@@ -57,13 +57,62 @@ namespace Capstone.Classes
             return Balance;
         }
 
-        public void DispenseItem(VendingMachineItem item)
+        public string DispenseItem(VendingMachineItem item) //TODO FINISH ME!
         {
-            item.Quantity--;
-            //Balance -= item.Price;
-           //if (item.Slot.Contains("A")
-           //     { }
-           //go back to purchase menu
+            string result = "";
+            if(Balance >= item.Price)
+            {
+                Balance -= item.Price;
+                result = DispenseMessage(item);
+                item.Quantity--;
+            }
+            else
+            {
+                result = "Insufficient funds.";
+
+            }
+            return result;
+
+            //go back to purchase menu
+        }
+        public string DispenseMessage(VendingMachineItem item)
+        {
+            string result = "";
+            if (item.Slot.Contains('A'))
+            {
+                result = "Crunch Crunch, Yum!";
+            }
+            else if (item.Slot.Contains('B'))
+            {
+                result = "Munch Munch, Yum!";
+            }
+            else if (item.Slot.Contains('C'))
+            {
+                result = "Glug Glug, Yum!";
+            }
+            else if (item.Slot.Contains('D'))
+            {
+                result = "Chew Chew, Yum!";
+            }
+            else
+            {
+                result = "The machine dispenses your item.";
+            }
+            return result;
+        }
+
+        public bool CheckBalance(VendingMachineItem item)
+        {
+            bool result = false;
+            if (Balance >= item.Price)
+            {
+                result = true;
+            }
+            else
+            {
+                result = false;
+            }
+            return result;
         }
 
     }
