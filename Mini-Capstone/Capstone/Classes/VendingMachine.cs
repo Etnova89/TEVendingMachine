@@ -13,18 +13,6 @@ namespace Capstone.Classes
         private string filePath = @"C:\VendingMachine\vendingmachine.csv";
         public decimal Balance { get; private set; }
         public string SlotSelection { get; set; }
-        //public string TotalSales
-        //{
-        //    get
-        //    {
-        //        TotalSales = 
-        //    }
-        //    protected set
-        //    {
-                
-        //    }
-        //}
-
 
         public bool ReadFile()
         {
@@ -41,7 +29,7 @@ namespace Capstone.Classes
                         VendingMachineItem item = new VendingMachineItem();
                         item.Slot = itemArray[0];
                         item.ProductName = itemArray[1];
-                        item.Price = decimal.Parse(itemArray[2]);    //TODO, add a tryparse
+                        item.Price = decimal.Parse(itemArray[2]);
                         item.Quantity = 5;
                         items.Add(item);
                     }
@@ -53,15 +41,11 @@ namespace Capstone.Classes
             {
                 result = false;
             }
-            //catch (DirectoryNotFoundException)
-            //{
-            //    result = false;
-            //}
             return result;
         }
 
 
-        public string DispenseMessage(VendingMachineItem item)  //todo linebreak after dispensing
+        public string DispenseMessage(VendingMachineItem item)
         {
             string result = "";
             if (item.Slot.Contains('A'))
@@ -160,9 +144,8 @@ namespace Capstone.Classes
 
         public string DispenseItem(VendingMachineItem item)
         {
-            decimal totalSales = 0.0M;
             string result = "";
-            if (CheckBalance(item))
+            if (CheckBalance(item) == true)
             {
                 if (item.Quantity == 0)
                 {
@@ -173,7 +156,6 @@ namespace Capstone.Classes
                     Balance -= item.Price;
                     result = DispenseMessage(item);
                     item.Quantity--;
-                    //totalSales += item.Price;
                     WriteLogFile($"{item.ProductName} {item.Slot.PadRight(5)} {Balance:C} {Balance - item.Price:C}");
                 }
                 return result;
