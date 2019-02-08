@@ -128,7 +128,7 @@ namespace Capstone.Classes
 
         }
 
-        private void SelectProduct()
+        private string SelectProduct()
         {
             VendingMachineItem[] result = DisplayCurrentItems();
             DisplayVendingMachineItems();
@@ -146,7 +146,7 @@ namespace Capstone.Classes
                     resultString = "Slot number not found, please try again.";
                 }
             }
-            Console.WriteLine(resultString);
+            return resultString;
             //display updated inventory
             //prompt to make a selection
             //
