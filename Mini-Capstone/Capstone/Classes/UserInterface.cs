@@ -134,22 +134,19 @@ namespace Capstone.Classes
             DisplayVendingMachineItems();
             Console.WriteLine("Please make selection.");
             string userInput = Console.ReadLine().ToUpper();
+            string resultString = "";
             foreach (VendingMachineItem item in result)
             {
                 if (item.Slot == userInput)
                 {
-                    if (vendingMachine.CheckBalance(item))
-                    {
-                        vendingMachine.DispenseItem(item);
-                        Console.WriteLine(vendingMachine.DispenseMessage(item));
-                    }
-                    else
-                    {
-                        Console.WriteLine("Insufficient funds.");
-                    }
+                    resultString = vendingMachine.DispenseItem(item);
                 }
-
+                else
+                {
+                    resultString = "Slot number not found, please try again.";
+                }
             }
+            Console.WriteLine(resultString);
             //display updated inventory
             //prompt to make a selection
             //
