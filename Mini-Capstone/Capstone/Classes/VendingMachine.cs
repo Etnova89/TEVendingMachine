@@ -75,7 +75,7 @@ namespace Capstone.Classes
 
             //go back to purchase menu
         }
-        public string DispenseMessage(VendingMachineItem item)
+        public string DispenseMessage(VendingMachineItem item)  //todo linebreak after dispensing
         {
             string result = "";
             if (item.Slot.Contains('A'))
@@ -113,6 +113,36 @@ namespace Capstone.Classes
                 result = false;
             }
             return result;
+        }
+        public int[] MakeChange(decimal Balance)
+        {
+            int quarter = 0;
+            int dime = 0;
+            int nickel = 0;
+            int[] change = { quarter, dime, nickel };
+            while (Balance != 0)
+            {
+                if (Balance >= 0.25M)
+                {
+                    Balance -= 0.25M;
+                    quarter++;
+                }
+                else if (Balance >= 0.1M)
+                {
+                    Balance -= 0.1M;
+                    dime++;
+                }
+                else if (Balance >= 0.05M)
+                {
+                    Balance -= 0.05M;
+                    nickel++;
+                }
+            }
+            change[0] = quarter;
+            change[1] = dime;
+            change[2] = nickel;
+            this.Balance = Balance;
+            return change;
         }
 
     }

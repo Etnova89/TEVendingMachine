@@ -163,7 +163,30 @@ namespace Capstone.Classes
 
         private void FinishTransaction()
         {
-            //MakeChange;
+            string result = $"Your change is {vendingMachine.Balance:C}: ";
+            int[] change = vendingMachine.MakeChange(vendingMachine.Balance);
+            if (change[0] > 0 || change[1] > 0 || change[2] > 0)
+            {
+                if (change[0] != 0)
+                {
+                    result += $"{change[0]} quarters ";
+                }
+                if (change[1] != 0)
+                {
+                    result += $"{change[1]} dimes ";
+                }
+                if (change[2] != 0)
+                {
+                    result += $"{change[2]} nickels";
+                }
+            }
+            else
+            {
+                result = "Transaction Complete.";
+            }
+            Console.WriteLine(result);
+            Console.WriteLine();
+
         }
 
         private void SalesReport()
