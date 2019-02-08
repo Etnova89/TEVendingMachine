@@ -9,10 +9,9 @@ namespace Capstone.Classes
         private VendingMachine vendingMachine = new VendingMachine();
         private VendingMachineItem items = new VendingMachineItem();
 
-
         public void RunInterface()
         {
-
+            vendingMachine.ReadFile();
             bool done = false;
             while (!done)
             {
@@ -32,7 +31,6 @@ namespace Capstone.Classes
                 switch (choice)
                 {
                     case 1:
-                        vendingMachine.ReadFile();
                         DisplayVendingMachineItems();
                         break;
 
@@ -93,18 +91,19 @@ namespace Capstone.Classes
             }
 
         }
-        
+
 
         private void DisplayVendingMachineItems()
         {
-            VendingMachineItem[] result = vendingMachine.ToArray();
+            VendingMachineItem[] result = DisplayCurrentItems();
             //Console.Clear();
+            HeaderMethod();
             foreach (VendingMachineItem item in result)
             {
                 Console.WriteLine(item.ToString());
             }
             Console.WriteLine();
-            
+
         }
 
         private void FeedMoney()
@@ -113,7 +112,7 @@ namespace Capstone.Classes
             try
             {
                 int deposit = int.Parse(Console.ReadLine());
-                if(deposit == 1 || deposit == 2|| deposit == 5 || deposit == 10)
+                if (deposit == 1 || deposit == 2 || deposit == 5 || deposit == 10)
                 {
                     vendingMachine.AddToBalance(deposit);
                 }
@@ -131,9 +130,27 @@ namespace Capstone.Classes
 
         private void SelectProduct()
         {
-            //DispenseItem();
+            VendingMachineItem[] result = DisplayCurrentItems();
+            Console.WriteLine("Please make selection.");
+            string userInput = Console.ReadLine().ToUpper();
+            foreach (VendingMachineItem item in result)
+            {
+                if (item.Slot == userInput)
+                {
+                    vendingMachine.DispenseItem(item);
+                }
+            }
+            //display updated inventory
+            //prompt to make a selection
+            //
         }
-        
+
+        private VendingMachineItem[] DisplayCurrentItems()
+        {
+            VendingMachineItem[] result = vendingMachine.ToArray();
+            return result;
+        }
+
         private void FinishTransaction()
         {
             //MakeChange;
@@ -142,6 +159,13 @@ namespace Capstone.Classes
         private void SalesReport()
         {
 
+        }
+
+        private void HeaderMethod()
+        {
+            Console.Clear();
+            Console.WriteLine("Slot".PadRight(5) + "Product Name".PadRight(20) + "# Remaining".PadRight(14) + "Price");
+            Console.WriteLine("=============================================");
         }
     }
 }

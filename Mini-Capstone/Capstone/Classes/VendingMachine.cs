@@ -51,10 +51,20 @@ namespace Capstone.Classes
             return displayItems;
         }
 
-        public  decimal AddToBalance(decimal money)
+        public decimal AddToBalance(decimal money)
         {
             Balance += money;
             return Balance;
         }
+
+        public void DispenseItem(VendingMachineItem item)
+        {
+            item.Quantity--;
+            //Balance -= item.Price;
+           //if (item.Slot.Contains("A")
+           //     { }
+           //go back to purchase menu
+        }
+
     }
 }
