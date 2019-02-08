@@ -7,9 +7,24 @@ namespace Capstone.Classes
 {
     public class VendingMachine
     {
+
+
         private List<VendingMachineItem> items = new List<VendingMachineItem>();
         private string filePath = @"C:\VendingMachine\vendingmachine.csv";
         public decimal Balance { get; private set; }
+        public string SlotSelection { get; set; }
+        //public string TotalSales
+        //{
+        //    get
+        //    {
+        //        TotalSales = 
+        //    }
+        //    protected set
+        //    {
+                
+        //    }
+        //}
+
 
         public bool ReadFile()
         {
@@ -45,38 +60,6 @@ namespace Capstone.Classes
             return result;
         }
 
-        public VendingMachineItem[] ToArray()
-        {
-            VendingMachineItem[] displayItems = items.ToArray();
-            return displayItems;
-        }
-
-        public decimal AddToBalance(decimal money)
-        {
-            Balance += money;
-            return Balance;
-        }
-
-        public string DispenseItem(VendingMachineItem item)
-        {
-            string result = "";
-            if (CheckBalance(item))
-            {
-                result = "Insufficient funds.";
-            }
-            if (item.Quantity == 0)
-            {
-                result = "Sold Out.";
-            }
-            else
-            {
-                Balance -= item.Price;
-                result = DispenseMessage(item);
-                item.Quantity--;
-            }
-
-            return result;
-        }
 
         public string DispenseMessage(VendingMachineItem item)  //todo linebreak after dispensing
         {
@@ -104,19 +87,22 @@ namespace Capstone.Classes
             return result;
         }
 
-        public bool CheckBalance(VendingMachineItem item)
+        public VendingMachineItem[] ToArray()
         {
-            bool result = false;
-            if (Balance >= item.Price)
-            {
-                result = true;
-            }
-            else
-            {
-                result = false;
-            }
-            return result;
+            VendingMachineItem[] displayItems = items.ToArray();
+            return displayItems;
         }
+
+        public decimal AddToBalance(decimal money)
+        {
+            if (money > 0)
+            {
+                Balance += money;
+                WriteLogFile($"FEED MONEY: {money:C} {Balance:C}");
+            }
+            return Balance;
+        }
+
 
         public int[] MakeChange(decimal Balance)
         {
@@ -124,6 +110,9 @@ namespace Capstone.Classes
             int dime = 0;
             int nickel = 0;
             int[] change = { quarter, dime, nickel };
+
+            WriteLogFile($"GIVE CHANGE: {Balance:C} $0.00");
+
             while (Balance != 0)
             {
                 if (Balance >= 0.25M)
@@ -145,8 +134,77 @@ namespace Capstone.Classes
             change[0] = quarter;
             change[1] = dime;
             change[2] = nickel;
+
             this.Balance = Balance;
             return change;
+        }
+
+        public bool IsSlotSelectionValid()
+        {
+            bool result = false;
+            foreach (VendingMachineItem item in items)
+            {
+                if (item.Slot.Contains(SlotSelection))
+                {
+                    result = true;
+                    break;
+                }
+                else
+                {
+                    result = false;
+                }
+            }
+            return result;
+        }
+
+
+        public string DispenseItem(VendingMachineItem item)
+        {
+            decimal totalSales = 0.0M;
+            string result = "";
+            if (CheckBalance(item))
+            {
+                if (item.Quantity == 0)
+                {
+                    result = "Sold Out";
+                }
+                else
+                {
+                    Balance -= item.Price;
+                    result = DispenseMessage(item);
+                    item.Quantity--;
+                    //totalSales += item.Price;
+                    WriteLogFile($"{item.ProductName} {item.Slot.PadRight(5)} {Balance:C} {Balance - item.Price:C}");
+                }
+                return result;
+            }
+            else
+            {
+                result = "Insufficient funds";
+            }
+            return result;
+        }
+
+        public bool CheckBalance(VendingMachineItem item)
+        {
+            bool result = false;
+            if (Balance >= item.Price)
+            {
+                result = true;
+            }
+            else
+            {
+                result = false;
+            }
+            return result;
+        }
+
+        public void WriteLogFile(string info)
+        {
+            using (StreamWriter log = new StreamWriter(@"C:\VendingMachine\log.txt", true))
+            {
+                log.WriteLine($"{DateTime.Now.ToShortDateString()} {DateTime.Now.ToShortTimeString()} {info}");
+            }
         }
     }
 }
