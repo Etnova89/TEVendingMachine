@@ -33,17 +33,15 @@ namespace Capstone.Classes
                         item.Quantity = 5;
                         items.Add(item);
                     }
-
                 }
                 result = true;
             }
-            catch//TODO add proper catch later
+            catch
             {
                 result = false;
             }
             return result;
         }
-
 
         public string DispenseMessage(VendingMachineItem item)
         {
@@ -140,7 +138,6 @@ namespace Capstone.Classes
             }
             return result;
         }
-
 
         public string DispenseItem(VendingMachineItem item)
         {

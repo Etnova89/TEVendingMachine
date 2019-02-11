@@ -72,7 +72,6 @@ namespace CapstoneTests
             items.Add(item);
             VendingMachineItem[] itemArray = items.ToArray();
             CollectionAssert.AreEquivalent(items, itemArray);
-
         }
 
         [TestMethod]
@@ -152,8 +151,6 @@ namespace CapstoneTests
             int[] expectedResult = { 40, 0, 0 };
             CollectionAssert.AreEquivalent(expectedResult, result);
         }
-
     }
-
 }
 

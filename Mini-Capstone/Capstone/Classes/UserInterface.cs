@@ -9,7 +9,6 @@ namespace Capstone.Classes
     {
         private VendingMachine vendingMachine = new VendingMachine();
         private VendingMachineItem items = new VendingMachineItem();
-        //private VendingMachineItem[] result = new VendingMachineItem[]; //TODO STOP SUCKING AT THIS
 
         public void RunInterface()
         {
@@ -49,7 +48,6 @@ namespace Capstone.Classes
                         WriteSalesFile();
                         break;
                 }
-
             }
         }
 
@@ -88,9 +86,7 @@ namespace Capstone.Classes
                         done = true;
                         break;
                 }
-
             }
-
         }
 
         private void DisplayVendingMachineItems()
@@ -126,7 +122,7 @@ namespace Capstone.Classes
             }
             catch
             {
-                
+
             }
         }
 
